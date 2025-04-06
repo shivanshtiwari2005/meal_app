@@ -9,8 +9,8 @@ class CategoriesScreen extends StatelessWidget {
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals
-    .where((meal) => meal.categories.contains(category.id))
-    .toList();
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -38,7 +38,12 @@ class CategoriesScreen extends StatelessWidget {
           mainAxisSpacing: 20,
         ),
         children: [
-          //availableCategories.map((category) => CatergoryGridItem(category: category)).toList(),
+          // ...availableCategories.map((category) => CatergoryGridItem(
+          //   category: category,
+          //   onSelectCategory: () {
+          //     _selectCategory(context, category);
+          //   },
+          // )),
           for (final category in availableCategories)
             CatergoryGridItem(
                 category: category,
