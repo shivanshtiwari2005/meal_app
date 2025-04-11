@@ -4,7 +4,8 @@ import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
 import 'package:meal_app/screens/filters.dart';
-import 'package:meal_app/data/dummy_data.dart';
+import 'package:meal_app/providers/meals_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 
@@ -15,16 +16,16 @@ final kInitialFilters = {
   Filter.vegan: false,
 };
 
-class TabsScreen extends StatefulWidget {
+class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key});
 
   @override
-  State<TabsScreen> createState() {
+  ConsumerState<TabsScreen> createState() {
     return _TabsScreenState();
   }
 }
 
-class _TabsScreenState extends State<TabsScreen> {
+class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
@@ -81,8 +82,9 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final meals = ref.watch(mealsProvider);
 
-   final avalableMeals = dummyMeals.where((meal) {
+   final avalableMeals = meals.where((meal) {
       if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
         return false;
       }
